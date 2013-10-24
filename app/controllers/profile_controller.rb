@@ -1,6 +1,8 @@
 require 'user'
 
 class ProfileController < ApplicationController
+  authorize_resource :class => false
+  
   def edit
     @screen_to_render = 'editProfile'
   end

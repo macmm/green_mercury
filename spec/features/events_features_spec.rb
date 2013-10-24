@@ -45,6 +45,11 @@ feature 'view all events' do
     page.should have_content @event.title
     page.should have_content @event2.title
   end
+
+  scenario 'a not signed in user tries to view an event' do
+    visit events_path
+    page.should have_content 'Please sign in'
+  end
 end
 
 feature 'delete an event' do

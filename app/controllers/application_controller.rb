@@ -21,7 +21,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
+    if current_user.nil?
+      redirect_to root_url, alert: "Please sign in."
+    else
+      redirect_to root_url, :alert => exception.message
+    end
   end
 
   before_filter :select_a_sponsor

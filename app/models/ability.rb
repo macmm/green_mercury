@@ -8,12 +8,16 @@ class Ability
       can :manage, :all
     end
 
-    can :manage, Event do |event|
-      user.organizer?(event)
-    end
-
     if !user.uuid.nil?
+      
+      can :manage, Event do |event|
+        user.organizer?(event)
+      end
+
       can [:read, :create], Event
+      can [:read, :update, :create], Concept
+      can [:read, :update, :create], ConceptDescription
+      can :read, Profile
     end
   end
 end

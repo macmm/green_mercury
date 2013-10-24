@@ -1,4 +1,6 @@
 class ConceptsController < ApplicationController
+  authorize_resource
+
   def index
     @concepts = Concept.all
   end

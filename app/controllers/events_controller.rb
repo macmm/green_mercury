@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  authorize_resource
 
   def new
     @event = Event.new

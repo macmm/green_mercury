@@ -21,4 +21,26 @@ describe Ability do
     ability = Ability.new(user)
     ability.should be_able_to(:update, FactoryGirl.create(:member_application))
   end
+
+  it 'lets a member read, update and create concepts' do
+    user = FactoryGirl.build(:user)
+    ability = Ability.new(user)
+    ability.should be_able_to(:read, Concept.new)
+    ability.should be_able_to(:update, Concept.new)
+    ability.should be_able_to(:create, Concept.new)
+  end
+
+  it 'lets a member read, update and create concept description' do
+    user = FactoryGirl.build(:user)
+    ability = Ability.new(user)
+    ability.should be_able_to(:read, ConceptDescription.new)
+    ability.should be_able_to(:update, ConceptDescription.new)
+    ability.should be_able_to(:create, ConceptDescription.new)
+  end
+
+  it 'lets a member read events' do
+    user = FactoryGirl.build(:user)
+    ability = Ability.new(user)
+    ability.should be_able_to(:read, Event.new)
+  end
 end

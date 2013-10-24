@@ -2,10 +2,7 @@ require 'spec_helper'
 
 feature 'create concepts' do
   before :each do
-    @user = User.new
-    @user.uuid = '1'
-    @user.name = 'Captain Awesome'
-    FactoryGirl.create(:approved_mentor_application, user_uuid: @user.uuid)
+    @user = new_member
     User.stub(:fetch_from_uuids).and_return({ @user.uuid => @user })
     ConceptsController.any_instance.stub(:current_user).and_return(@user)
   end
@@ -35,6 +32,9 @@ end
 
 feature 'view concepts by name' do 
   scenario 'user clicks link to view all concepts' do
+    @user = new_member
+    User.stub(:fetch_from_uuids).and_return({ @user.uuid => @user })
+    ConceptsController.any_instance.stub(:current_user).and_return(@user)
     concept = FactoryGirl.create(:concept_description)
     visit concepts_path
     page.should have_content concept.concept.name
@@ -124,6 +124,11 @@ feature 'view all concepts' do
     visit concepts_path
     click_link concept.name
     page.should have_content description.description
+  end
+
+  scenario 'not signed in' do
+    visit concepts_path
+    page.should have_content 'Please sign in'
   end
 end
 
